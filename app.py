@@ -22,6 +22,11 @@ st.markdown("""
         font-family: 'Outfit', sans-serif;
     }
 
+    /* Force Material Icons to render correctly */
+    .stIcon, .material-symbols-rounded {
+        font-family: 'Material Symbols Rounded' !important;
+    }
+
     .stApp {
         background: radial-gradient(circle at 15% 50%, #1a1025, #0a0a0a 50%);
         background-attachment: fixed;
