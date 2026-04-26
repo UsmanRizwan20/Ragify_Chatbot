@@ -18,8 +18,8 @@ st.markdown("""
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
     /* Base Styles */
-    * {
-        font-family: 'Outfit', sans-serif !important;
+    html, body, [class*="css"], [class*="st-"]  {
+        font-family: 'Outfit', sans-serif;
     }
 
     .stApp {
