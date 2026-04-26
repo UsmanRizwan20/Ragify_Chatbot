@@ -18,13 +18,8 @@ st.markdown("""
     @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
 
     /* Base Styles */
-    html, body, [class*="css"], [class*="st-"]  {
-        font-family: 'Outfit', sans-serif;
-    }
-
-    /* Force Material Icons to render correctly */
-    .stIcon, .material-symbols-rounded {
-        font-family: 'Material Symbols Rounded' !important;
+    p, h1, h2, h3, h4, h5, h6, li, ul, label, input, textarea, .stMarkdown {
+        font-family: 'Outfit', sans-serif !important;
     }
 
     .stApp {
