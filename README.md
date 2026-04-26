@@ -4,7 +4,7 @@ RAGify is a premium multimodal AI assistant powered by Google's **Gemini 2.5 Fla
 - Chat with an intelligent AI.
 - Upload images to analyze them or extract text.
 - Upload datasets (Excel/CSV) and interactively explore or query them.
-
+- Check my project https://ragifychatbot.streamlit.app/
 ## Features
 - **Multimodal capabilities:** Support for text, images, and data (CSV/XLSX).
 - **Beautiful UI:** Custom premium dark-themed design with glassmorphism effects.
