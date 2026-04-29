@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from google import genai
 from PIL import Image
 import pandas as pd
+from tenacity import retry, wait_exponential, stop_after_attempt
 # Set page configuration for a premium look
 st.set_page_config(
     page_title="RAGify",
@@ -115,6 +116,17 @@ if not api_key:
 # Initialize the GenAI client
 client = genai.Client(api_key=api_key)
 
+@retry(
+    wait=wait_exponential(multiplier=1, min=2, max=10),
+    stop=stop_after_attempt(4),
+    reraise=True
+)
+def generate_with_retry(contents):
+    return client.models.generate_content(
+        model='gemini-2.5-flash',
+        contents=contents,
+    )
+
 # Header
 st.title("✨ RAGify")
 st.markdown("A premium multimodal AI assistant powered by Google's **Gemini 2.5 Flash** model.")
@@ -129,6 +141,9 @@ with st.sidebar:
     image_to_process = None
     data_context = None
     if uploaded_file is not None:
+        # Reset the file pointer to the beginning before reading
+        uploaded_file.seek(0)
+        
         if uploaded_file.name.endswith(('.jpg', '.jpeg', '.png')):
             image_to_process = Image.open(uploaded_file)
             st.image(image_to_process, caption="Uploaded Image", use_container_width=True)
@@ -201,10 +216,7 @@ if prompt := st.chat_input("Ask Gemini anything..."):
                     contents.append(data_context)
                 
                 # Call Gemini API
-                response = client.models.generate_content(
-                    model='gemini-2.5-flash',
-                    contents=contents,
-                )
+                response = generate_with_retry(contents)
                 
                 result_text = response.text
                 st.markdown(result_text)
