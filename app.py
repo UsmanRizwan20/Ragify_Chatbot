@@ -118,25 +118,14 @@ client = genai.Client(api_key=api_key)
 
 @retry(
     wait=wait_exponential(multiplier=1, min=2, max=10),
-    stop=stop_after_attempt(3),
+    stop=stop_after_attempt(4),
     reraise=True
 )
-def call_gemini(model_name, contents):
+def generate_with_retry(contents):
     return client.models.generate_content(
-        model=model_name,
+        model='gemini-2.5-flash',
         contents=contents,
     )
-
-def generate_with_retry(contents):
-    try:
-        # Try the primary model first
-        return call_gemini('gemini-2.5-flash', contents)
-    except Exception as e:
-        # If it's a server/availability error, try the fallback model
-        if '503' in str(e) or 'UNAVAILABLE' in str(e) or '500' in str(e):
-            st.warning("⚠️ Primary model is experiencing high demand. Automatically switching to fallback model (gemini-1.5-flash)...")
-            return call_gemini('gemini-1.5-flash', contents)
-        raise e
 
 # Header
 st.title("✨ RAGify")
